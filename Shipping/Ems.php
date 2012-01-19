@@ -4,7 +4,7 @@
  * Redistributions of files must retain the copyright notice below.
  *
  * @category ThirdParty
- * @package  Vkontakte
+ * @package  Shipping
  * @author   Kanstantsin A Kamkou (2ka.by)
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     https://github.com/kkamkou/ZF-Russian-Post-SDK
@@ -15,7 +15,7 @@ namespace shipping;
 require_once 'Api/Abstract.php';
 
 /**
-* Api for the vkontakte.ru, that uses Zend Framework
+* Api for the EMS post service, that uses Zend Framework
 *
 * Example:
 *  $ems = new \shipping\Ems();

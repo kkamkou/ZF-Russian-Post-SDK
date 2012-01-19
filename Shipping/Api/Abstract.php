@@ -4,7 +4,7 @@
  * Redistributions of files must retain the copyright notice below.
  *
  * @category ThirdParty
- * @package  Vkontakte
+ * @package  Shipping
  * @author   Kanstantsin A Kamkou (2ka.by)
  * @license  http://www.opensource.org/licenses/mit-license.php The MIT License
  * @link     https://github.com/kkamkou/ZF-Russian-Post-SDK
