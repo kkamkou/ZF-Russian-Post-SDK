@@ -16,17 +16,6 @@ require_once 'Api/Abstract.php';
 
 /**
 * Api for the EMS post service, that uses Zend Framework
-*
-* Example:
-*  $ems = new \shipping\Ems();
-*
-*  $from = 'city--moskva';
-*  $target = 'city--astrahan';
-*  $weight = floatval(1200 / 1000);
-*  $country = 'US';
-*
-*  var_dump($ems->calculate($from, $target, $weight));
-*  var_dump($ems->calculate($from, $country, $weight, \shipping\Ems::TYPE_ATT));
 */
 class Ems extends \shipping\ShippingAbstract
 {

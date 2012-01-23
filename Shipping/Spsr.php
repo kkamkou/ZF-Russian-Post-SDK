@@ -16,22 +16,6 @@ require_once 'Api/Abstract.php';
 
 /**
 * Api for the SPSR post service, that uses Zend Framework
-*
-* Example:
-*  $spsr = new \shipping\Spsr();
-*
-*  $options = array(
-*   'Country' => '209|0',
-*   'ToRegion' => '7|0',
-*   'ToCity' => '124|0',
-*   'FromCountry' => '209|0',
-*   'FromRegion' => '40|0',
-*   'FromCity' => '992|0',
-*   'Weight' => 1, // KG
-*   'SID' => $spsr->getSid('login', 'password') // optional
-*  );
-*
-*  var_dump($spsr->calculate($options));
 */
 class Spsr extends \shipping\ShippingAbstract
 {
