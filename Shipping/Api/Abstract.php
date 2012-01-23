@@ -21,6 +21,12 @@ class ShippingAbstract
     protected $_httpClient;
 
     /**
+    * Stores the last error message
+    * @var string
+    */
+    protected $_lastError;
+
+    /**
     * Constructor
     *
     * @return void
@@ -31,7 +37,7 @@ class ShippingAbstract
         if (isset($options['httpClient'])) {
             $this->setHttpClient($options['httpClient']);
         } else {
-            $this->setHttpClient($this->getDefaultHttpClient());
+            $this->setHttpClient($this->_getDefaultHttpClient());
         }
     }
 
@@ -47,6 +53,17 @@ class ShippingAbstract
     }
 
     /**
+    * Stores the error description
+    *
+    * @return \shipping\ShippingAbstract
+    */
+    public function setError($msg)
+    {
+        $this->_lastError = $msg;
+        return $this;
+    }
+
+    /**
     * Returns current HTTP client
     *
     * @return \Zend_Http_Client
@@ -57,11 +74,31 @@ class ShippingAbstract
     }
 
     /**
+    * Returns last error during request
+    *
+    * @return string
+    */
+    public function getError()
+    {
+        return $this->_lastError;
+    }
+
+    /**
+    * Returns information about the latest request. Was it successful
+    *
+    * @return bool
+    */
+    public function hasError()
+    {
+        return !empty($this->_lastError);
+    }
+
+    /**
     * Returns object for the HTTP client
     *
     * @return \Zend_Http_Client
     */
-    public function getDefaultHttpClient()
+    protected function _getDefaultHttpClient()
     {
         $client = new \Zend_Http_Client();
         $client->setConfig(
@@ -79,20 +116,25 @@ class ShippingAbstract
     /**
     * Makes request and checks the result
     *
-    * @param  string $uri
-    * @param  array  $params (Default: array)
-    * @return stdClass
+    * @param  \Zend_Http_Client $client
+    * @return \Zend_Http_Response
     * @throws \Exception when the result was unsuccessful
     */
     protected function _request(\Zend_Http_Client $client)
     {
+        // we should reset the error holder
+        $this->_lastError = null;
+
         // let's send request and check what we have
         try {
             $response = $client->request();
         } catch (\Zend_Http_Client_Exception $e) {
-            throw new \Exception('Client request was unsuccessful', $e->getCode(), $e);
+            throw new \Exception(
+                'Client request was unsuccessful', $e->getCode(), $e
+            );
         }
 
+        // HTTP headers check
         if (!$response->isSuccessful()) {
             throw new \Exception(
                 "Request failed({$response->getStatus()}): {$response->getMessage()} at " .
@@ -100,14 +142,7 @@ class ShippingAbstract
             );
         }
 
-        // the response has JSON format, we should decode it
-        $decoded = \Zend_Json::decode($response->getBody(), \Zend_Json::TYPE_OBJECT);
-        if ($decoded === null) {
-            throw new \UnexpectedValueException(
-                'Response is not JSON: ' . $response->getBody()
-            );
-        }
-
-        return $decoded;
+        // default output
+        return $response;
     }
 }

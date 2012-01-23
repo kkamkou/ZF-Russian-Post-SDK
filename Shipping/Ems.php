@@ -40,7 +40,7 @@ class Ems extends \shipping\ShippingAbstract
     /**
     * Returns filtered set of regions
     *
-    * @return array
+    * @return array|false
     */
     public function getRegions()
     {
@@ -50,7 +50,7 @@ class Ems extends \shipping\ShippingAbstract
     /**
     * Returns filtered set of cities
     *
-    * @return array
+    * @return array|false
     */
     public function getCities()
     {
@@ -60,7 +60,7 @@ class Ems extends \shipping\ShippingAbstract
     /**
     * Returns filtered set of countries
     *
-    * @return array
+    * @return array|false
     */
     public function getCountries()
     {
@@ -74,7 +74,7 @@ class Ems extends \shipping\ShippingAbstract
     * @param  string $to
     * @param  float  $weight in KG
     * @param  string $type (Default: null)
-    * @return stdClass
+    * @return array|false
     */
     public function calculate($from, $to, $weight, $type = null)
     {
@@ -98,8 +98,11 @@ class Ems extends \shipping\ShippingAbstract
             $client->setParameterGet('type', $type);
         }
 
-        // response
-        return $this->_request($client)->rsp;
+        // stdClass object
+        $results = $this->_request($client);
+
+        // results
+        return $this->hasError() ? false : (array)$results->rsp;
     }
 
     /**
@@ -107,7 +110,7 @@ class Ems extends \shipping\ShippingAbstract
     * Available: "cities", "regions", "countries" or "russia"
     *
     * @param  string $type (Default: russia)
-    * @return array
+    * @return array|false
     */
     public function getRawLocations($type = 'russia')
     {
@@ -115,20 +118,28 @@ class Ems extends \shipping\ShippingAbstract
             ->setParameterGet('method', 'ems.get.locations')
             ->setParameterGet('type', $type);
 
-        return $this->_request($client)->rsp->locations;
+        // stdClass object
+        $results = $this->_request($client);
+
+        // results
+        return $this->hasError() ? false : (array)$results->rsp->locations;
     }
 
     /**
     * Returns the max weight of a package
     *
-    * @return float
+    * @return float|false
     */
     public function getMaxWeight()
     {
         $client = $this->_getHttpClient()
             ->setParameterGet('method', 'ems.get.max.weight');
 
-        return $this->_request($client)->rsp->max_weight;
+            // stdClass object
+        $results = $this->_request($client);
+
+        // results
+        return $this->hasError() ? false : (float)$results->rsp->max_weight;
     }
 
     /**
@@ -146,16 +157,52 @@ class Ems extends \shipping\ShippingAbstract
     * Returns filtered set of locations
     *
     * @param  string $type
-    * @return array
+    * @return array|false
     */
     protected function _filterRawLocations($type)
     {
+        // the locations set
+        $locations = $this->getRawLocations($type);
+        if (!$locations) {
+            return false;
+        }
+
+        // normalization
         $set = array();
-        foreach ($this->getRawLocations($type) as $location) {
+        foreach ($locations as $location) {
             if ($location->type == $type) {
                 $set[$location->name] = $location->value;
             }
         }
         return $set;
+    }
+
+    /**
+    * Makes request and checks the result
+    *
+    * @param  \Zend_Http_Client $client
+    * @return \Zend_Http_Response
+    * @throws \Exception when the result was unsuccessful
+    */
+    protected function _request(\Zend_Http_Client $client)
+    {
+        // the response body
+        $body = parent::_request($client)->getBody();
+
+        // the response has JSON format, we should decode it
+        $decoded = \Zend_Json::decode($body, \Zend_Json::TYPE_OBJECT);
+        if (null === $decoded) {
+            throw new \UnexpectedValueException('Response is not JSON: ' . $body);
+        }
+
+        // do we have errors?
+        if (isset($decoded->rsp->err)) {
+            $this->setError(
+                $decoded->rsp->err->code . ': ' . $decoded->rsp->err->msg
+            );
+        }
+
+        // results
+        return $decoded;
     }
 }
