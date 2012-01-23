@@ -1,9 +1,9 @@
-## Requirements
+# Requirements
 * PHP 5.3+
 * iconv or mbsrting extensions for the SPSR
 * Zend Framework
 
-## EMS examples
+## EMS Examples
 ### Package calculation:
 
 ```php
@@ -41,3 +41,58 @@ $ems = new \shipping\Ems();
 
 var_dump($ems->getMaxWeight());
 ```
+
+## SPSR Examples
+
+### Auth process (optional):
+
+```php
+$sid = $spsr->getSid(123321, 132234);
+```
+
+### Package calculation:
+```php
+$spsr = new \shipping\Spsr();
+
+$options = array(
+  'Country' => '209|0',
+  'ToRegion' => '7|0',
+  'ToCity' => '124|0',
+  'FromCountry' => '209|0',
+  'FromRegion' => '40|0',
+  'FromCity' => '992|0',
+  'Weight' => 1, // KG
+  'SID' => $spsr->getSid('login', 'password') // optional
+);
+
+var_dump($spsr->calculate($options));
+```
+
+### Regions and Countries
+
+```php
+$spsr = new \shipping\Spsr();
+
+// list of entries with first and second value for the calculation
+var_dump($spsr->getRegions());
+var_dump($spsr->getCountries());
+```
+
+### City or Cities:
+
+```php
+$spsr = new \shipping\Spsr();
+
+// one entry
+$spsr->findCity('Москва');
+
+// more than one entry
+$spsr->findCity('Челя');
+```
+
+## Error handling
+All functions return __false__ in case the post service provides incorrect answer.
+
+## Exceptions
+Exception - client request failed
+UnexpectedValueException - service provides unexpected data
