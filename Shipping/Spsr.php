@@ -15,7 +15,7 @@ namespace shipping;
 require_once 'Api/Abstract.php';
 
 /**
-* Api for the EMS post service, that uses Zend Framework
+* Api for the SPSR post service, that uses Zend Framework
 *
 * Example:
 *  $spsr = new \shipping\Spsr();
