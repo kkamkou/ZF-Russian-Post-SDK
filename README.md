@@ -95,4 +95,5 @@ All functions return __false__ in case the post service provides incorrect answe
 
 ## Exceptions
 Exception - client request failed
+
 UnexpectedValueException - service provides unexpected data
