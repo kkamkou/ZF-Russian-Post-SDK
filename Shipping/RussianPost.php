@@ -79,7 +79,7 @@ class RussianPost extends \shipping\ShippingAbstract
     /**
     * Returns set of package types
     *
-    * @param  bool $international
+    * @param  bool  $international (Default: false)
     * @return array
     */
     public function getTypesPackage($international = false)
@@ -91,7 +91,7 @@ class RussianPost extends \shipping\ShippingAbstract
     /**
     * Returns set of delivery types
     *
-    * @param  bool $international
+    * @param  bool  $international (Default: false)
     * @return array
     */
     public function getTypesDelivery($international = false)
@@ -108,15 +108,14 @@ class RussianPost extends \shipping\ShippingAbstract
     * @param  string $pkgType
     * @param  int    $cryCode
     * @param  int    $dryType
-    * @param  int    $weight grams
-    * @param  int    $value
+    * @param  int    $weight (Default: 0) In grams
+    * @param  int    $value (Default: 0)
     * @return string
     */
     public function calculateInternational($pkgType, $cryCode, $dryType, $weight = 0, $value = 0)
     {
         // the client object
-        $client = $this->getHttpClient()
-            ->setUri(self::URI_RESULTS);
+        $client = $this->getHttpClient();
 
         // defaults
         $client->setParameterGet('viewPost', $pkgType)
@@ -140,15 +139,14 @@ class RussianPost extends \shipping\ShippingAbstract
     * @param  string $pkgType
     * @param  int    $index
     * @param  int    $dryType
-    * @param  int    $weight grams
-    * @param  int    $value
+    * @param  int    $weight (Default: 0) In grams
+    * @param  int    $value (Default: 0)
     * @return string
     */
     public function calculateLocal($pkgType, $dryType, $index, $weight = 0, $value = 0)
     {
         // the client object
-        $client = $this->getHttpClient()
-            ->setUri(self::URI_RESULTS);
+        $client = $this->getHttpClient();
 
         // defaults
         $client->setParameterGet('viewPost', $pkgType)
@@ -176,6 +174,9 @@ class RussianPost extends \shipping\ShippingAbstract
     {
         // client adjustment
         $client->getAdapter()->setConfig(array('timeout' => 30));
+
+        // default uri
+        $client->setUri(self::URI_RESULTS);
 
         // the response body
         $body = parent::_request($client)->getBody();
