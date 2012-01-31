@@ -201,6 +201,6 @@ class RussianPost extends \shipping\ShippingAbstract
         }
 
         // results
-        return str_replace(',', '.', $result->current()->nodeValue);
+        return strtr($result->current()->nodeValue, ',', '.');
     }
 }

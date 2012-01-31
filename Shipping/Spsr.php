@@ -113,18 +113,18 @@ class Spsr extends \shipping\ShippingAbstract
     public function calculate(array $options)
     {
         // required fileds
-        $required = array(
-            'Country', 'ToRegion', 'ToCity', 'FromCountry', 'FromRegion',
-            'FromCity', 'Weight'
-        );
-
-        // options validation
+        $required = array('ToCity', 'FromCity', 'Weight');
         foreach ($required as $key) {
             if (empty($options[$key])) {
                 throw new \UnexpectedValueException(
                     "The '{$key}' option is required"
                 );
             }
+        }
+
+        // the weight normalization
+        if (strlen($options['Weight']) > 1) {
+            $options['Weight'] = sprintf('%0.1f', $options['Weight'] / 1000);
         }
 
         // optional fields
@@ -164,7 +164,14 @@ class Spsr extends \shipping\ShippingAbstract
         $xml = $this->_request($client);
 
         // results
-        return $this->hasError() ? false : (array)$xml->Tariff;
+        if ($this->hasError()) {
+            return false;
+        }
+
+        // float number here
+        $results = (array)$xml->Tariff;
+        $results['Total_Dost'] = strtr($results['Total_Dost'], ',', '.');
+        return $results;
     }
 
     /**

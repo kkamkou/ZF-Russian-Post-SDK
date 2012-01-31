@@ -61,7 +61,7 @@ class Ems extends \shipping\ShippingAbstract
     *
     * @param  string $from
     * @param  string $to
-    * @param  float  $weight in KG
+    * @param  float  $weight
     * @param  string $type (Default: null)
     * @return array|false
     */
@@ -73,6 +73,11 @@ class Ems extends \shipping\ShippingAbstract
             throw new \UnexpectedValueException(
                 'International package requires type to be specified'
             );
+        }
+
+        // the weight normalization
+        if (strlen($weight) > 1) {
+            $weight = $this->_getWeight($weight);
         }
 
         // http client params
@@ -129,6 +134,28 @@ class Ems extends \shipping\ShippingAbstract
 
         // results
         return $this->hasError() ? false : (float)$results->rsp->max_weight;
+    }
+
+    /**
+    * The weight normalization
+    *
+    * @param  int $weight
+    * @return float|int
+    */
+    protected function _getWeight($weight)
+    {
+        switch (true) {
+            case $weight < 101:
+                return 0.1;
+            case $weight < 501:
+                return 0.5;
+            case $weight < 1001:
+                return 1;
+            case $weight < 1501:
+                return 1.5;
+            default:
+                return intval($weight / 1000);
+        }
     }
 
     /**
