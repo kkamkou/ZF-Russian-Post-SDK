@@ -255,7 +255,7 @@ class Spsr extends \shipping\ShippingAbstract
         // oops
         if (libxml_get_last_error()) {
             throw new \Exception(
-                'XML parser returned the error: ' . libxml_get_last_error()
+                'XML parser returned the error: ' . libxml_get_last_error()->message
             );
         }
 
