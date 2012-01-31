@@ -76,7 +76,7 @@ class Ems extends \shipping\ShippingAbstract
         }
 
         // the weight normalization
-        if (strlen($weight) > 1) {
+        if (strlen($weight) > 2) {
             $weight = $this->_getWeight($weight);
         }
 

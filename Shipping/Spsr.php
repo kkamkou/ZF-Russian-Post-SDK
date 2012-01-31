@@ -123,21 +123,19 @@ class Spsr extends \shipping\ShippingAbstract
         }
 
         // the weight normalization
-        if (strlen($options['Weight']) > 1) {
+        if (strlen($options['Weight']) > 2) {
             $options['Weight'] = sprintf('%0.1f', $options['Weight'] / 1000);
         }
 
         // optional fields
         $optional = array(
             'Amount' => 0,
-            'AmountCheck' => 0,
+            'AmountCheck' => 1,
             'SMS' => 0,
             'BeforeSignal' => 0,
             'PlatType' => 1,
-            'DuesOrder' => '',
-            'SID' => 'undefined',
-            'ToCityName' => '',
-            'FromCityName' => ''
+            'DuesOrder' => 0,
+            'SID' => 'undefined'
         );
 
         // let's append them
