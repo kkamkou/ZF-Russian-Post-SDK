@@ -105,7 +105,7 @@ class ShippingAbstract
             array(
                 'storeresponse'   => true,
                 'strictredirects' => true,
-                'timeout'         => 10,
+                'timeout'         => 15, // thoughtful services
                 'useragent'       => 'ZF-Shipping-Api'
             )
         );
