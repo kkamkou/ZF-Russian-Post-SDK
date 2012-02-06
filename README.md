@@ -3,6 +3,38 @@
 * iconv or mbsrting extensions for the SPSR
 * Zend Framework
 
+## RussianPost Examples
+### Package calculation:
+
+```php
+$post = new \shipping\RussianPost();
+$postcode = 454013;
+$weight = 400; // 0.4kg
+var_dump($post->calculateLocal(26, 1, $postcode, $weight));
+```
+
+### International package calculation:
+
+```php
+$post = new \shipping\RussianPost();
+$ccode = 112; // BY
+$weight = 400; // 0.4kg
+var_dump($post->calculateInternational(26, $ccode, $postcode, $weight));
+```
+
+### Misc information
+```php
+$post = new \shipping\RussianPost();
+
+// the package types
+var_dump($post->getTypesPackage());
+var_dump($post->getTypesPackage(true)); // international
+
+// the delivery types
+var_dump($post->getTypesDelivery());
+var_dump($post->getTypesDelivery(true)); // international
+```
+
 ## EMS Examples
 ### Package calculation:
 
@@ -47,6 +79,7 @@ var_dump($ems->getMaxWeight());
 ### Auth process (optional):
 
 ```php
+$spsr = new \shipping\Spsr();
 $sid = $spsr->getSid(123321, 132234);
 ```
 
