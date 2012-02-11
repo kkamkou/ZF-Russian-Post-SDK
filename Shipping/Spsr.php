@@ -10,14 +10,14 @@
  * @link     https://github.com/kkamkou/ZF-Russian-Post-SDK
  */
 
-namespace shipping;
+namespace Shipping;
 
 require_once 'Api/Abstract.php';
 
 /**
 * Api for the SPSR post service, that uses Zend Framework
 */
-class Spsr extends \shipping\ShippingAbstract
+class Spsr extends \Shipping\ShippingAbstract
 {
     // uris for the SPSR service
     const URI_CALC    = 'http://www.cpcr.ru/cgi-bin/postxml.pl?TariffCompute_2&254';

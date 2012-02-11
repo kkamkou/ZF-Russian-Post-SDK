@@ -10,7 +10,7 @@
  * @link     https://github.com/kkamkou/ZF-Russian-Post-SDK
  */
 
-namespace shipping;
+namespace Shipping;
 
 class ShippingAbstract
 {
@@ -29,7 +29,7 @@ class ShippingAbstract
     /**
     * Constructor
     *
-    * @return void
+    * @param array $options (Default: array)
     */
     public function __construct(array $options = array())
     {
@@ -44,7 +44,8 @@ class ShippingAbstract
     /**
     * Changes the HTTP client
     *
-    * @return \shipping\ShippingAbstract
+    * @param  \Zend_Http_Client $client
+    * @return \Shipping\ShippingAbstract
     */
     public function setHttpClient(\Zend_Http_Client $client)
     {
@@ -55,7 +56,8 @@ class ShippingAbstract
     /**
     * Stores the error description
     *
-    * @return \shipping\ShippingAbstract
+    * @param  string $msg
+    * @return \Shipping\ShippingAbstract
     */
     public function setError($msg)
     {

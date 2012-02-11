@@ -10,14 +10,14 @@
  * @link     https://github.com/kkamkou/ZF-Russian-Post-SDK
  */
 
-namespace shipping;
+namespace Shipping;
 
 require_once 'Api/Abstract.php';
 
 /**
 * Api for the Russian Post service, that uses Zend Framework
 */
-class RussianPost extends \shipping\ShippingAbstract
+class RussianPost extends \Shipping\ShippingAbstract
 {
     const URI_RESULTS = 'http://www.russianpost.ru/autotarif/Autotarif.aspx';
 

@@ -10,14 +10,14 @@
  * @link     https://github.com/kkamkou/ZF-Russian-Post-SDK
  */
 
-namespace shipping;
+namespace Shipping;
 
 require_once 'Api/Abstract.php';
 
 /**
 * Api for the EMS post service, that uses Zend Framework
 */
-class Ems extends \shipping\ShippingAbstract
+class Ems extends \Shipping\ShippingAbstract
 {
     // uri for the EMS service
     const SERVICE_URI = 'http://emspost.ru/api/rest/';
