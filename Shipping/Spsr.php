@@ -175,8 +175,8 @@ class Spsr extends \Shipping\ShippingAbstract
     /**
     * Converts charset of the given string
     *
-    * @param string $string
-    * return string
+    * @param  string $string
+    * @return string
     */
     protected function _encode($string)
     {
@@ -189,6 +189,7 @@ class Spsr extends \Shipping\ShippingAbstract
     /**
     * Returns filtered set of regions
     *
+    * @param  string $type
     * @return array|false
     */
     protected function _getRegionsHash($type)
@@ -245,6 +246,9 @@ class Spsr extends \Shipping\ShippingAbstract
 
         // the response has XML format, we should parse it
         $oldState = libxml_use_internal_errors(true);
+
+        // errors cleanup
+        libxml_clear_errors();
 
         // the xml object
         $xml = simplexml_load_string($body);
