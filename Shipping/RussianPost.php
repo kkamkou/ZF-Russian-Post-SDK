@@ -172,9 +172,6 @@ class RussianPost extends \Shipping\ShippingAbstract
     */
     protected function _request(\Zend_Http_Client $client)
     {
-        // client adjustment
-        $client->getAdapter()->setConfig(array('timeout' => 30));
-
         // default uri
         $client->setUri(self::URI_RESULTS);
 
