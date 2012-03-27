@@ -168,6 +168,13 @@ class Spsr extends \Shipping\ShippingAbstract
 
         // float number here
         $results = (array)$xml->Tariff;
+
+        // it's SPSR dude :)
+        if (!isset($results['Total_Dost'])) {
+            $this->setError('Incorrect format of the answer');
+            return false;
+        }
+
         $results['Total_Dost'] = strtr($results['Total_Dost'], ',', '.');
         return $results;
     }
