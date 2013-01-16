@@ -122,10 +122,8 @@ class Spsr extends \Shipping\ShippingAbstract
             }
         }
 
-        // the weight normalization
-        if (strlen($options['Weight']) > 2) {
-            $options['Weight'] = sprintf('%0.1f', $options['Weight'] / 1000);
-        }
+        // the weight normalization (in kg)
+        $options['Weight'] = sprintf('%0.2f', $options['Weight'] / 1000);
 
         // optional fields
         $optional = array(
