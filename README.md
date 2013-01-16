@@ -103,7 +103,8 @@ $options = array(
   'FromCountry' => '209|0',
   'FromRegion' => '40|0',
   'FromCity' => '992|0',
-  'Weight' => 1, // KG
+  'Weight' => 1000, // KG
+  'usldost'  => 'st_5_0', // optional, standart one.
   'SID' => $spsr->getSid('login', 'password') // optional
 );
 
