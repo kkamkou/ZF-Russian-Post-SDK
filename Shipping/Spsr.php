@@ -145,9 +145,6 @@ class Spsr extends \Shipping\ShippingAbstract
             }
         }
 
-        // default result
-        $result = array();
-
         // let's apply properies
         $client = $this->_getHttpClient()->setUri(self::URI_CALC);
         foreach ($options as $key => $value) {
@@ -166,8 +163,18 @@ class Spsr extends \Shipping\ShippingAbstract
             return false;
         }
 
-        // float number here
-        $results = (array)$xml->Tariff;
+        // if we need only one tariff
+        if (isset($options['usldost'])) {
+            $xpathResult = $xml->xpath('/root/Tariff[UslDost="' . $options['usldost'] . '"]');
+            if ($xpathResult !== false) {
+                $results = (array)$xpathResult[0];
+            }
+        }
+
+        // if we have no result so far, lets provide first of them
+        if (!isset($results)) {
+            $results = (array)$xml->Tariff;
+        }
 
         // it's SPSR dude :)
         if (!isset($results['Total_Dost'])) {
