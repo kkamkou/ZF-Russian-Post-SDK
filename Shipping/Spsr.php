@@ -108,6 +108,7 @@ class Spsr extends \Shipping\ShippingAbstract
     * Makes calculation according options
     *
     * @param  array $options
+    * @throws \UnexpectedValueException if a required option skipped
     * @return array|false
     */
     public function calculate(array $options)
@@ -143,7 +144,7 @@ class Spsr extends \Shipping\ShippingAbstract
             }
         }
 
-        // let's apply properies
+        // let's apply properties
         $client = $this->_getHttpClient()->setUri(self::URI_CALC);
         foreach ($options as $key => $value) {
             if (!is_numeric($value)) {
@@ -162,8 +163,8 @@ class Spsr extends \Shipping\ShippingAbstract
         }
 
         // if we need only one tariff
-        if (isset($options['TariffType'])) {
-            $xpathResult = $xml->xpath("/root/Tariff[contains(., '{$options['TariffType']}')]");
+        if (isset($options['usldost'])) {
+            $xpathResult = $xml->xpath('/root/Tariff[UslDost="' . $options['usldost'] . '"]');
             if ($xpathResult !== false) {
                 $results = (array)$xpathResult[0];
             }
@@ -249,6 +250,7 @@ class Spsr extends \Shipping\ShippingAbstract
     * Makes request and checks the result
     *
     * @param  \Zend_Http_Client $client
+    * @throws \Exception if XML parser returned the error
     * @return \SimpleXMLElement
     */
     protected function _request(\Zend_Http_Client $client)

@@ -1,0 +1,29 @@
+{
+  "name": "kkamkou/zf-russian-post-sdk",
+  "description": "Russian post, EMS and SPSR shipping calculations with ZF1",
+  "type": "library",
+  "homepage": "http://github.com/kkamkou/ZF-Russian-Post-SDK",
+  "license": "BSD-2-Clause",
+  "keywords": [
+    "zf1",
+    "shipping",
+    "EMS",
+    "SPSR",
+    "RussianPost"
+  ],
+  "authors": [
+    {
+      "name": "Kanstantsin Kamkou",
+      "email": "kkamkou@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.2.11",
+    "zendframework/zendframework1" : "1.12.*"
+  },
+  "autoload": {
+    "psr-0": {
+      "TpShipping": "Shipping/"
+    }
+  }
+}
