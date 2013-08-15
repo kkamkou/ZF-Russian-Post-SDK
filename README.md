@@ -1,7 +1,7 @@
 # Requirements
 * PHP 5.3+ (namespaces)
-* Zend Framework
-* Also you need to have nerves to work with the SPSR :)
+* Zend Framework 1
+* Also you must have nerves to work with the SPSR :)
 
 ## RussianPost Examples
 ### Package calculation:
