@@ -38,7 +38,7 @@ class Spsr extends ApiAbstract
         // the client object
         $client = $this->_getHttpClient()
             ->setUri(self::URI_CITY)
-            ->setParameterGet('CityName', $this->_encode($title));
+            ->setParameterGet('CityName', $title);
 
         // the xml object
         $xml = $this->_request($client);
@@ -68,8 +68,8 @@ class Spsr extends ApiAbstract
         // the client object
         $client = $this->_getHttpClient()
             ->setUri(self::URI_SID)
-            ->setParameterGet('ContrNum', $this->_encode($login))
-            ->setParameterGet('passw', $this->_encode($password));
+            ->setParameterGet('ContrNum', $login)
+            ->setParameterGet('passw', $password);
 
         // the xml object
         $xml = $this->_request($client);
@@ -146,10 +146,6 @@ class Spsr extends ApiAbstract
         // let's apply properties
         $client = $this->_getHttpClient()->setUri(self::URI_CALC);
         foreach ($options as $key => $value) {
-            if (!is_numeric($value)) {
-                $value = $this->_encode($value);
-            }
-
             $client->setParameterGet($key, $value);
         }
 
@@ -162,8 +158,8 @@ class Spsr extends ApiAbstract
         }
 
         // if we need only one tariff
-        if (isset($options['usldost'])) {
-            $xpathResult = $xml->xpath('/root/Tariff[UslDost="' . $options['usldost'] . '"]');
+        if (isset($options['TariffType'])) {
+            $xpathResult = $xml->xpath("/root/Tariff[contains(., '{$options['TariffType']}')]");
             if ($xpathResult !== false) {
                 $results = (array)$xpathResult[0];
             }
@@ -182,20 +178,6 @@ class Spsr extends ApiAbstract
 
         $results['Total_Dost'] = strtr($results['Total_Dost'], ',', '.');
         return $results;
-    }
-
-    /**
-    * Converts charset of the given string
-    *
-    * @param  string $string
-    * @return string
-    */
-    protected function _encode($string)
-    {
-        if (extension_loaded('mbstring')) {
-            return mb_convert_encoding($string, 'cp1251', 'utf-8');
-        }
-        return iconv('utf-8', 'cp1251', $string);
     }
 
     /**
