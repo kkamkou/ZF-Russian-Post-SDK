@@ -1,6 +1,5 @@
 # Requirements
-* PHP 5.3+
-* iconv or mbsrting extensions for the SPSR
+* PHP 5.3+ (namespaces)
 * Zend Framework
 * Also you need to have nerves to work with the SPSR :)
 
