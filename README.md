@@ -104,9 +104,16 @@ $options = array(
   'FromRegion' => '40|0',
   'FromCity' => '992|0',
   'Weight' => 1000, // KG
-  'usldost'  => 'st_5_0', // optional, standart one.
+  'TariffType'  => 'Пеликан-онлайн', // Пеликан-онлайн requires SID
   'SID' => $spsr->getSid('login', 'password') // optional
 );
+
+/* Valid TariffType:
+Пеликан-онлайн
+Пеликан-стандарт
+Пеликан-эконом
+who knows, mb. SPSR has something else :O
+*/
 
 var_dump($spsr->calculate($options));
 ```

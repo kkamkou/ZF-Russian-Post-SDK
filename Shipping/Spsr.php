@@ -162,8 +162,8 @@ class Spsr extends \Shipping\ShippingAbstract
         }
 
         // if we need only one tariff
-        if (isset($options['usldost'])) {
-            $xpathResult = $xml->xpath('/root/Tariff[UslDost="' . $options['usldost'] . '"]');
+        if (isset($options['TariffType'])) {
+            $xpathResult = $xml->xpath("/root/Tariff[contains(., '{$options['TariffType']}')]");
             if ($xpathResult !== false) {
                 $results = (array)$xpathResult[0];
             }
