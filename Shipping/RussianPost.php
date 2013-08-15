@@ -12,12 +12,11 @@
 
 namespace Shipping;
 
-require_once 'Api/Abstract.php';
-
 /**
 * Api for the Russian Post service, that uses Zend Framework
+* @see ApiAbstract
 */
-class RussianPost extends \Shipping\ShippingAbstract
+class RussianPost extends ApiAbstract
 {
     const URI_RESULTS = 'http://www.russianpost.ru/autotarif/Autotarif.aspx';
 

@@ -12,12 +12,11 @@
 
 namespace Shipping;
 
-require_once 'Api/Abstract.php';
-
 /**
 * Api for the EMS post service, that uses Zend Framework
+* @see ApiAbstract
 */
-class Ems extends \Shipping\ShippingAbstract
+class Ems extends ApiAbstract
 {
     // uri for the EMS service
     const SERVICE_URI = 'http://emspost.ru/api/rest/';

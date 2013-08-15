@@ -3,7 +3,7 @@
   "description": "Russian post, EMS and SPSR shipping calculations with ZF1",
   "type": "library",
   "homepage": "http://github.com/kkamkou/ZF-Russian-Post-SDK",
-  "license": "BSD-2-Clause",
+  "license": "MIT",
   "keywords": [
     "zf1",
     "shipping",
@@ -23,7 +23,7 @@
   },
   "autoload": {
     "psr-0": {
-      "Shipping": "Shipping/"
+      "Shipping": "/"
     }
   }
 }

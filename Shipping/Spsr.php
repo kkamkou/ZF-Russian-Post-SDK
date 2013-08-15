@@ -12,12 +12,11 @@
 
 namespace Shipping;
 
-require_once 'Api/Abstract.php';
-
 /**
 * Api for the SPSR post service, that uses Zend Framework
+* @see ApiAbstract
 */
-class Spsr extends \Shipping\ShippingAbstract
+class Spsr extends ApiAbstract
 {
     // uris for the SPSR service
     const URI_CALC    = 'http://www.cpcr.ru/cgi-bin/postxml.pl?TariffCompute_2&254';

@@ -12,7 +12,7 @@
 
 namespace Shipping;
 
-class ShippingAbstract
+abstract class ApiAbstract
 {
     /**
     * Object for the http client
@@ -45,7 +45,7 @@ class ShippingAbstract
     * Changes the HTTP client
     *
     * @param  \Zend_Http_Client $client
-    * @return \Shipping\ShippingAbstract
+    * @return ApiAbstract
     */
     public function setHttpClient(\Zend_Http_Client $client)
     {
@@ -57,7 +57,7 @@ class ShippingAbstract
     * Stores the error description
     *
     * @param  string $msg
-    * @return \Shipping\ShippingAbstract
+    * @return ApiAbstract
     */
     public function setError($msg)
     {
