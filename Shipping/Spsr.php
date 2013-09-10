@@ -160,9 +160,12 @@ class Spsr extends ApiAbstract
         // if we need only one tariff
         if (isset($options['TariffType'])) {
             $xpathResult = $xml->xpath("/root/Tariff[contains(., '{$options['TariffType']}')]");
-            if ($xpathResult !== false) {
-                $results = (array)$xpathResult[0];
+            if ($xpathResult === false || empty($xpathResult)) {
+                $this->setError('TariffType is not found in the xml response');
+                return false;
             }
+
+            $results = (array)$xpathResult[0];
         }
 
         // if we have no result so far, lets provide first of them
